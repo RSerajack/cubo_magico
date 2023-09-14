@@ -1,4 +1,4 @@
-#import kociemba
+import kociemba
 
 def UpperFace(FR):
     if FR == ('BW' or 'WG' or 'GY' or 'YB'): return 'R'
@@ -16,51 +16,48 @@ def converte_face(face, conversao):
 
 cores = ['W', 'R', 'Y', 'O', 'B', 'G']
 cores_opostas = { 'W':'Y', 'R':'O', 'B':'G', 'Y':'W', 'O':'R', 'G':'B'}
-#cores_ad = {'W':['G', 'R', 'B', 'O'], 'R':['G', 'Y', 'B', 'W'], 'B':['Y', 'R', 'W', 'O'], 'Y':['G', 'R', 'B', 'O'], 'O':['G', 'Y', 'B', 'W'], 'G':['Y', 'R', 'W', 'O']}
 
 #recebendo matriz de cores
 face_U = [
-    ['Y', 'G', 'O'],
-    ['R', 'G', 'W'],
-    ['G', 'R', 'R']
+    ['R', 'Y', 'O'],
+    ['O', 'B', 'O'],
+    ['W', 'O', 'O']
 ]
 
 face_R = [
-    ['B', 'B', 'B'],
-    ['Y', 'W', 'W'],
-    ['O', 'Y', 'G']
+    ['G', 'G', 'G'],
+    ['B', 'W', 'B'],
+    ['W', 'W', 'Y']
 ]
 
 face_F = [
-    ['Y', 'B', 'Y'],
-    ['O', 'R', 'G'],
-    ['G', 'W', 'W']
+    ['B', 'W', 'Y'],
+    ['R', 'O', 'O'],
+    ['B', 'Y', 'B']
 ]
 
 face_D = [
-    ['O', 'O', 'B'],
-    ['B', 'B', 'R'],
-    ['R', 'O', 'R']
+    ['O', 'B', 'O'],
+    ['W', 'G', 'B'],
+    ['W', 'W', 'R']
 ]
 
 face_L = [
-    ['G', 'W', 'O'],
-    ['G', 'Y', 'B'],
-    ['B', 'Y', 'W']
+    ['B', 'Y', 'R'],
+    ['R', 'Y', 'Y'],
+    ['G', 'R', 'Y']
 ]
 
 face_B = [
-    ['Y', 'O', 'R'],
-    ['G', 'O', 'R'],
-    ['W', 'Y', 'W']
+    ['W', 'G', 'Y'],
+    ['R', 'R', 'G'],
+    ['G', 'G', 'R']
 ]
 
 F = face_F[1][1]
 R = face_R[1][1]
 B = cores_opostas[F]
 L = cores_opostas[R]
-
-#cores_conhecidas = [F, R, B, L]
 
 U = None
 D = None
@@ -75,11 +72,58 @@ print(f'U : {U} | R : {R} | F : {F} | D : {D} | L : {L} | B : {B}')
 
 conversao = { U:'U', R:'R', F:'F', D:'D', L:'L', B:'B'}
 
+converte_face(face_U, conversao)
 converte_face(face_R, conversao)
 converte_face(face_F, conversao)
+converte_face(face_D, conversao)
+converte_face(face_L, conversao)
+converte_face(face_B, conversao)
 
+print('------Upper------')
+for linha in face_U:
+    print(linha)
+print('------Right------')
+for linha in face_R:
+    print(linha)
+print('------Front------')
 for linha in face_F:
     print(linha)
+print('------Down------')
+for linha in face_D:
+    print(linha)
+print('------Left------')
+for linha in face_L:
+    print(linha)
+print('------Back------')
+for linha in face_B:
+    print(linha)
+print('----------------')
 
+cadeia = f'{face_U[0][0]}{face_U[0][1]}{face_U[0][2]}{face_U[1][0]}{face_U[1][1]}{face_U[1][2]}{face_U[2][0]}{face_U[2][1]}{face_U[2][2]}{face_R[0][0]}{face_R[0][1]}{face_R[0][2]}{face_R[1][0]}{face_R[1][1]}{face_R[1][2]}{face_R[2][0]}{face_R[2][1]}{face_R[2][2]}{face_F[0][0]}{face_F[0][1]}{face_F[0][2]}{face_F[1][0]}{face_F[1][1]}{face_F[1][2]}{face_F[2][0]}{face_F[2][1]}{face_F[2][2]}{face_D[0][0]}{face_D[0][1]}{face_D[0][2]}{face_D[1][0]}{face_D[1][1]}{face_D[1][2]}{face_D[2][0]}{face_D[2][1]}{face_D[2][2]}{face_L[0][0]}{face_L[0][1]}{face_L[0][2]}{face_L[1][0]}{face_L[1][1]}{face_L[1][2]}{face_L[2][0]}{face_L[2][1]}{face_L[2][2]}{face_B[0][0]}{face_B[0][1]}{face_B[0][2]}{face_B[1][0]}{face_B[1][1]}{face_B[1][2]}{face_B[2][0]}{face_B[2][1]}{face_B[2][2]}'
 
+print("String para resolver: ", cadeia)
 
+result = kociemba.solve(cadeia)
+
+#result = "R2 R R D D F B F' L"
+
+comandos = []
+
+for i in range(len(result)-1):
+    if result[i+1] == ("'"):
+        comandos.append(f'{result[i]}{result[i+1]}')
+    elif result[i+1] == ("2"):
+        comandos.append(f'{result[i]}{result[i]}')
+    elif result[i] == "'" or result[i] == "2":
+        pass
+    elif result[i+1] == ' ':
+        comandos.append(result[i])
+    else:
+        pass
+
+print("Passo a passo: ")
+
+#for e in comandos:
+#    print(e)
+
+print(comandos)
